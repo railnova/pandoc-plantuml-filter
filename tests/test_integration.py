@@ -1,7 +1,6 @@
 import os
 import re
 import subprocess
-
 from pathlib import Path
 
 import pytest
@@ -39,7 +38,7 @@ def test_digrams(tmp_path, filename, expected_content, expected_files):
     input_file = str(__TEST_BASE_DIR__ / f"{filename}.md")
     output_file = str(tmp_path / f"{filename}.tex")
 
-    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml"])
+    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml"], check=False)
     assert cmd.returncode == 0
 
     with open(output_file) as f:
@@ -56,7 +55,7 @@ def test_filetype_param_from_meta(tmp_path):
     input_file = str(__TEST_BASE_DIR__ / "single-diagram-with-meta.md")
     output_file = str(tmp_path / "single-diagram-with-meta.tex")
 
-    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml"])
+    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml"], check=False)
     assert cmd.returncode == 0
 
     with open(output_file) as f:
@@ -72,7 +71,7 @@ def test_filetype_metadata_is_overridden_from_cli(tmp_path):
     output_file = str(tmp_path / "single-diagram-with-meta.tex")
     args = ["--metadata=plantuml-format:jpg"]
 
-    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml"] + args)
+    cmd = subprocess.run(["pandoc", input_file, "-o", output_file, "--filter", "pandoc-plantuml", *args], check=False)
     assert cmd.returncode == 0
 
     with open(output_file) as f:

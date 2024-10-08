@@ -7,11 +7,10 @@ Needs `plantuml.jar` from http://plantuml.com/.
 """
 
 import os
-import sys
 import subprocess
+import sys
 
-from pandocfilters import toJSONFilter, Para, Image
-from pandocfilters import get_filename4code, get_caption, get_extension
+from pandocfilters import Image, Para, get_caption, get_extension, get_filename4code, toJSONFilter
 
 PLANTUML_BIN = os.environ.get("PLANTUML_BIN", "plantuml")
 
@@ -66,7 +65,7 @@ def plantuml(key, value, format_, meta):
                 with open(src, "wb") as f:
                     f.write(txt)
 
-                subprocess.check_call(PLANTUML_BIN.split() + ["-t" + filetype, src])
+                subprocess.check_call([*PLANTUML_BIN.split(), "-t" + filetype, src])
                 sys.stderr.write("Created image " + dest + "\n")
 
             # Update symlink each run

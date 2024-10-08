@@ -37,4 +37,9 @@ dynamic = ["version"]
 [project.scripts]
 pandoc-plantuml = "pandoc_plantuml_filter:main"
 
+[tool.ruff]
+line-length = 120
+# Rule descriptions: https://docs.astral.sh/ruff/rules/
+lint.select = ["I", "E", "B", "F", "W", "N", "C4", "C90", "ARG", "PL", "RUF", "UP"]
+
 [tool.setuptools_scm]
